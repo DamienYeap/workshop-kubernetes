@@ -20,7 +20,7 @@ Pour appliquer ces changements:
 k apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml
 ```
 
-# Exercice 1
+## Exercice 1
 
 > Si vous utilisez chrome pour l'atelier activer les certificats auto-signé sur localhost
 > taper _chrome://flags/#allow-insecure-localhost_ dans l'url et activer l'option.
@@ -50,7 +50,7 @@ k describe svc dashboard
 
 </details>
 
-# Exercice 2
+## Exercice 2
 
 Pour se connecter au dashboard kubernetes il faut renseigner un token d'un utilisateur autorisé à utiliser le dashboard.
 Nous allons dans cet exercice créer un user avec une autre methode de modification d'un cluster.
@@ -98,7 +98,7 @@ subjects:
 
 </details>
 
-# Exercice 3
+## Exercice 3
 
 Lors de la création d'un serviceaccount kubernetes lui associe un secret et notamment un token qui va nous servir pour se connecter au dashboard
 
@@ -107,7 +107,7 @@ Lors de la création d'un serviceaccount kubernetes lui associe un secret et not
 - Dechiffrer le token qui est en base64
 - Se connecter sur le dashboard kubernetes avec le token grâce au port-forward
 
-# Exercice 4 (facultatif)
+## Exercice 4 (facultatif)
 
 Dans l'exercice précédent on a associé à notre user un rôle au niveau cluster (clusterolebinding) qui lui donne tous les droits. Quel sera le résultat dans le dashboard si on associe simplement un role (rolebinding) qui limité par définition à un namespace ?
 

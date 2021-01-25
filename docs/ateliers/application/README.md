@@ -58,7 +58,7 @@ k cp hello:/etc/nginx/conf.d/hello.conf .
 Pour gérer la résiliance des applications il faut utiliser les ressources pour gérer la charge de travail (deployments, statefulsets, ect).
 
 - Supprimer le pod exsitant avec la commande _k delete_
-- Déployer l'application avec la commande _k run --image=nginxdemos/hello hello_
+- Déployer l'application avec la commande _k create deploy --image=nginxdemos/hello hello_
 - Consulter les ressources pod, deploiement, replicasets
 - Supprimer un pod et observer le cycle de vie des pods du namespace
 
@@ -67,7 +67,7 @@ Pour gérer la résiliance des applications il faut utiliser les ressources pour
 
 ```shell
 k delete po hello
-k run --image=nginxdemos/hello hello
+k create deploy --image=nginxdemos/hello hello
 k get po
 k get deploy
 k get rs
@@ -196,7 +196,7 @@ EOF
 
 </details>
 
-- Consulter les ingress pour connaître l'ip d'entrée du flux, depuis votre navigateur consulter plusieurs fois l'url pour illustrer le round-robin du service
+- Consulter les ingress pour connaître l'ip d'entrée du flux, depuis votre navigateur consulter plusieurs fois l'url pour illustrer le round-robin du service (Sur windows ajouter le port utilisé pour le loadbalancer 8081)
 
 > Il est possible suivant l'ingress controler que l'on utilise de faire des règles de routing sur le host, l'ip, un header http, ect.
 > Il exsite une ressource Egress permettant de gérer le flux sortant
