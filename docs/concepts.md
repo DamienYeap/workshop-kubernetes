@@ -70,6 +70,10 @@ spec:
         - containerPort: 80
 ```
 
+Cycle de vide d'un pod
+
+![pod](./assets/pod.jpeg)
+
 ### Deploiement / StatefulSets / Deamonset / Jobs
 
 Pour manipuler plusieurs pods, gérer la redondance, les notions d'haute disponibilité, kubernetes nous permet de déclarer des charges de travail (Deploiement/StatefulSets/Deamonset/Jobs/...).
