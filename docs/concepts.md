@@ -6,14 +6,14 @@
 
 ### Control plane
 
-Partie management du cluster qui est composée de plusieurs éléments qui sont souvent redondés. Dans un cluster managé le controle plane n'est pas accéssible directement et c'est le clouder qui le provisonne à la création du cluster.
-Un cluster kubernetes s'efforce à tout instant de s'assurer que l'état déclarée correspond à l'état actuel du cluster, les actions sont réalisées par des déclanchements d'evenements asynchrones.
+Partie management du cluster qui est composée de plusieurs éléments qui sont souvent redondés. Dans un cluster managé le _control plane_ n'est pas accéssible directement et c'est le clouder qui le provisionne à la création du cluster.
+Un cluster kubernetes s'efforce à tout instant de s'assurer que l'état souhaité correspond à l'état actuel du cluster, les actions sont réalisées par des déclenchements d'evenements asynchrones.
 
 #### API
 
-Le control plane expose une api qui permet aussi bien aux clients (developper par exemple) qu'aux différents éléments du cluster de communiquer avec le master et les nodes.
-L'api est en HTTP implemnte REST, des certificats permettent de garantir l'origine des appels. L'api est versionnée et extensible.
-Par exemple pour avoir l'état d'une node on va passer par l'api qui exposera l'éat de la node en interrogeant les services nécessaires, on ne se connectera pas directement à une node.
+Le control plane expose une api qui permet aussi bien aux clients (un devops par exemple) qu'aux différents éléments techniques du cluster de communiquer avec les controleurs et les nodes.
+L'api est en HTTP et implemente REST, des certificats permettent de garantir l'origine des appels. L'api est versionnée et extensible.
+Par exemple pour avoir l'état d'une node on va requeter l'api qui exposera l'état de la node en interrogeant les services nécessaires, on ne se connectera pas directement à une node.
 
 #### ETCD
 
@@ -21,7 +21,7 @@ Base de données du cluster qui permet de stocker les ressources et "l'état dé
 
 #### Control manager
 
-Contient la logique du cluster, il est composé de plusieurs controlleurs qui interragissent avec les éléments du cluster.
+Contient la logique du cluster, il est composé de plusieurs contrôleurs qui interragissent avec les éléments du cluster.
 
 #### Scheduleur
 
@@ -35,22 +35,22 @@ Les nodes forment la partie qui execute la charge de travail (pod). Les nodes so
 
 Sur une node on retrouve trois éléments:
 
-- le kubeproxy pour la partie réseau et
+- le kubeproxy pour la partie réseau
 - le kubelet qui permet le dialoguer avec le master par l'api et qui dialogue avec le container runtime
-- le runtime container (souvent docker mais pas necessairement)
+- le runtime container (souvent docker mais pas obligatoire)
 
 ## Ressources
 
-Dans un cluster kubernetes tout élément est une ressource qui a une définition et des "instances" applicable pour une version de l'API.
-Une ressource a forcement un nom, il faut consulter sa définition pour savoir les champs qu'il est possible de paramétrer lors de la création ou mise à jour d'une nouvelle ressource.
-Le champ _kind_ et le champ _apiVersion_ permet à l'api server de valider en fonction de la définition de la ressource en question si la demande est valide.
-Kubernetes fournit en standard un certain nombre de ressources qu'il sait gérer, il est possible d'étendre l'api de kubernets avec des ressources personnalisées (CRD).
+Dans un cluster kubernetes, tout élément est une ressource qui a une définition et des "instances" et une version de l'API.
+Une ressource a obligatoirement un nom, il faut ensuite consulter sa définition pour savoir les champs qu'il est possible de paramétrer lors de la création ou mise à jour d'une nouvelle ressource.
+Le champ _kind_ et le champ _apiVersion_ permet à l'api serveur de valider en fonction de la définition de la ressource en question si la demande est valide.
+Kubernetes offre en standard un certain nombre de ressources qu'il sait gérer, il est possible d'étendre l'api de kubernetes avec des ressources personnalisées (CRD).
 Pour créer ou manipuler les ressources d'un cluster kubernetes on utilise le format de fichier yaml.
 
 ### Pods
 
 Un pod est l'élément le plus simple et unitaire qu'un cluster kubernetes sait manipuler.
-Un pod peut etre constitué d'un ou plusieurs container docker qui vont partager le meme contexte (stockage, réseau, isolation, linux namespace, cgroups...).
+Un pod peut etre constitué d'un ou plusieurs containers docker qui vont partager le meme contexte (stockage, réseau, isolation, linux namespace, cgroups...).
 C'est l'unité "pod" qui sera ordonnancée sur une node et donc tous les containers au sein d'un pod seront orchestrés sur la même node.
 Généralement on ne manipule pas directement les pods mais les ressources de plus haut niveau.
 
@@ -72,7 +72,7 @@ spec:
 
 ### Deploiement / StatefulSets / Deamonset / Jobs
 
-Pour manipuler plusieurs pods, gérer la redondance, les notions d'haute disponibilité, kubernetes nous permet de déclarer des charges de travail (Deploiement/StatefulSets/Deamonset/Jobs).
+Pour manipuler plusieurs pods, gérer la redondance, les notions d'haute disponibilité, kubernetes nous permet de déclarer des charges de travail (Deploiement/StatefulSets/Deamonset/Jobs/...).
 Chaque type de charge de travail a ces propres proprités en terme d'ordonnancement, de mise à jour des pods, ect.
 
 ```yaml
@@ -99,12 +99,12 @@ spec:
             - containerPort: 80
 ```
 
-Dans cet exemple on voit la notion de replicas qui indique le nombre de pod souhaité, cela veut dire que le cluster va essayer à tout moment de garantir l'excution de 3 pods nginx (pas forcement sur la même node).
+Dans cet exemple on voit la notion de replicas qui indique le nombre de pod souhaité, cela veut dire que le cluster va essayer à tout moment de garantir l'execution de 3 pods nginx (pas forcement sur la même node).
 
 ### Services
 
-Le service est une ressource qui permet de faire un abstraction au niveau réseau au dessus des pods. Il existe plusierus types de services pour gérer différente entrée du flux (Loadblancer, ClusterIP, NodePort).
-C'est le service qui réalise la répartition du flux entre le ou les pods en destination en se basant sur les probes disponibles sur les pods.
+Le service est une ressource qui permet de faire un abstraction au niveau réseau au dessus des pods. Il existe plusieurs types de services pour gérer différentes entrées du flux (Loadbalancer, ClusterIP, NodePort).
+C'est le service qui réalise la répartition du flux entre le ou les pods en destination en se basant sur la disponibilité des pods. Il fait un pont par bind de port entre un flux entrant et les pods cibles. Un service peut gérer plusieurs ports d'entrée mais un port d'entrée doit correspondre à un seul port cible.
 
 ```yaml
 apiVersion: v1
@@ -122,11 +122,11 @@ spec:
 
 ### Configmaps & Secrets
 
-Un cluster kubernetes manipule uniquement des ressources, une installation standard de kubernetes vient donc avec un certain nombres de ressources pour répondre aux problèmatiques les plus courantes.
-Il existe par exemple une ressource Configmaps qui permet de stocker de la configuration qui pourra etre injecté dans un pod.
+Un cluster kubernetes manipule uniquement des ressources, une installation standard de kubernetes vient donc avec un certain nombre de ressources pour répondre aux problèmatiques les plus courantes.
+Il existe par exemple une ressource ConfigMap qui permet de stocker de la configuration qui pourra etre injecté dans un pod.
 Les configmaps sont en clair, il existe une ressource sercets pour chiffrer des informations mais ce chiffrement est par défaut uniquement en base64.
 
-```yaml
+````yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -137,7 +137,7 @@ data:
     color.good=purple
     color.bad=yellow
     allow.textmode=true
-```
+```kubernetes-dashboard
 
 ```yaml
 apiVersion: v1
@@ -147,10 +147,10 @@ metadata:
 type: Opaque
 data:
   password: cGFzc3dvcmQK
-```
+````
 
 ### CustomResourceDefinitions (CRD)
 
 Il est possible d'étendre l'api de kubernetes pour gérer des ressources "non standard". Pour cela il faut installer au sein du cluster la définition de la nouvelle ressource à l'aide de la ressource CRD.
-Cette nouvelle ressource pourra donc etre gérée et stockée dans le cluster. Pour traiter cette nouvelle ressource il faudra déployer dans le cluster une charge de travail (POD) qui sera acapable d'analyser cette nouvelle resosurce.
-Par exemple velero qui est un outil de sauvegarde, déclare à son installation des CRD notamment uen ressource permettant definir la périodicité des sauvegardes, cela permet de valider le paramétrage renseigné à l'opposé d'une configmap.
+Cette nouvelle ressource pourra donc etre gérée et stockée dans le cluster. Pour traiter cette nouvelle ressource il faudra déployer dans le cluster une charge de travail (POD) qui sera capable de gérer cette nouvelle resosurce.
+Par exemple velero qui est un outil de sauvegarde, déclare à son installation des CRD notamment une ressource permettant definir la périodicité des sauvegardes, cela permet de valider le paramétrage renseigné au contraire d'une configmap.
