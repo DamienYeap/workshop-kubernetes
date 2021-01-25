@@ -16,7 +16,7 @@ Pour réaliser ce worshop vous devez avoir installé docker sur votre machine et
 <details>
 <summary>Linux</summary>
 
-- installer kubectx et kubens [lien](https://github.com/ahmetb/kubectx)
+- Installer kubectx et kubens [lien](https://github.com/ahmetb/kubectx)
 
 </details>
 

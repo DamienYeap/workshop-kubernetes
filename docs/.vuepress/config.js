@@ -1,7 +1,11 @@
 module.exports = {
   plugins: {
     sitemap: {
-      hostname: "https://yeap-atelier-kubernetes.netlify.com",
+      hostname: "https://yeap-atelier-kubernetes.netlify.app",
+      exclude: ["/404"],
+      dateFormatter: (val) => {
+        return new Date().toISOString();
+      },
     },
     "vuepress-plugin-zooming": {
       selector: ".md-image",
