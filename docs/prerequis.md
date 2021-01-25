@@ -1,6 +1,6 @@
 # Prérequis
 
-Ce workshop a été construit pour être réalisé sur Windows 10 à l'origine, si necessaire l'équivalent linux pour chaque commande windows sera disponible dans un paragraphe à dérouler.
+Ce workshop pour être réalisé sur Windows 10 ou linux pour chaque commande windows sera disponible dans un paragraphe à dérouler.
 
 Pour réaliser ce worshop vous devez avoir installé docker sur votre machine et être l'admin de votre poste de travail.
 

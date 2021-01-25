@@ -73,7 +73,7 @@ spec:
 ### Deploiement / StatefulSets / Deamonset / Jobs
 
 Pour manipuler plusieurs pods, gérer la redondance, les notions d'haute disponibilité, kubernetes nous permet de déclarer des charges de travail (Deploiement/StatefulSets/Deamonset/Jobs/...).
-Chaque type de charge de travail a ces propres proprités en terme d'ordonnancement, de mise à jour des pods, ect.
+Chaque type de charge de travail a ces propres proprités en terme d'ordonnancement, de mise à jour des pods, ect. C'est cette ressource qui va porter la gestion de la montée de version des pods, des rollbacks.
 
 ```yaml
 apiVersion: apps/v1
@@ -154,3 +154,9 @@ data:
 Il est possible d'étendre l'api de kubernetes pour gérer des ressources "non standard". Pour cela il faut installer au sein du cluster la définition de la nouvelle ressource à l'aide de la ressource CRD.
 Cette nouvelle ressource pourra donc etre gérée et stockée dans le cluster. Pour traiter cette nouvelle ressource il faudra déployer dans le cluster une charge de travail (POD) qui sera capable de gérer cette nouvelle resosurce.
 Par exemple velero qui est un outil de sauvegarde, déclare à son installation des CRD notamment une ressource permettant definir la périodicité des sauvegardes, cela permet de valider le paramétrage renseigné au contraire d'une configmap.
+
+### Deployments
+
+Schéma présentant une partie des ressources liées au déploiement d'une application.
+
+![deployment](./assets/deployments.png)
