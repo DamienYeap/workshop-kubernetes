@@ -1,4 +1,5 @@
 module.exports = {
+  head: [["link", { rel: "icon", type: "image/png", href: "/favicon.png" }]],
   plugins: {
     sitemap: {
       hostname: "https://yeap-atelier-kubernetes.netlify.app",
