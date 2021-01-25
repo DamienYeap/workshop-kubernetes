@@ -1,0 +1,11 @@
+---
+home: true
+heroImage: /kuberneteslogo.png
+actionText: Get Started →
+actionLink: /ateliers/
+tagline: Découvrir kubernetes et ces concepts avec des exemples
+footer: Yeap
+meta:
+  - name: description
+    content: Découvrir kuberenetes et ces concepts avec des exemples
+---
