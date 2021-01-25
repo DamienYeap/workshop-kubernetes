@@ -1,7 +1,11 @@
 module.exports = {
   plugins: {
     sitemap: {
-      hostname: "https://yeap-atelier-kubernetes.netlify.com",
+      hostname: "https://yeap-atelier-kubernetes.netlify.app",
+      exclude: ["/404"],
+      dateFormatter: (val) => {
+        return new Date().toISOString();
+      },
     },
     "vuepress-plugin-zooming": {
       selector: ".md-image",
@@ -54,8 +58,14 @@ module.exports = {
             title: "Ateliers",
             path: "/ateliers/",
             collapsable: true,
-            sidebarDepth: 1,
-            children: ["/ateliers/kubeconfig/"],
+            sidebarDepth: 0,
+            children: [
+              "/ateliers/kubeconfig/",
+              "/ateliers/kubectl/",
+              "/ateliers/namespace/",
+              "/ateliers/apply/",
+              "/ateliers/application/",
+            ],
           },
         ],
       },
