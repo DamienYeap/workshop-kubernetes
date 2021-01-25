@@ -71,7 +71,21 @@ kubectl version --client
 
 Création d'un cluster avec k3d
 
+<details>
+<summary>Windows</summary>
+
 ```shell
-# Depuis powershell avec une session admin
+k3d cluster create workshop -a 1 -p "8081:80@loadbalancer"
+# Si le port 8081 est déjà utilisé vous pouvez utiliser un autre port local
+```
+
+</details>
+
+<details>
+<summary>Linux</summary>
+
+```shell
 k3d cluster create workshop -a 1
 ```
+
+</details>

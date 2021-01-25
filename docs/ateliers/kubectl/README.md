@@ -42,7 +42,7 @@ Par défaut kubectl présente les informations dans un tableau qui est défini p
 
 ```shell
 k get nodes -o yaml
-k get nodes k3d-yeap-server-0 -o yaml
+k get nodes k3d-workshop-server-0 -o yaml
 ```
 
 </details>
