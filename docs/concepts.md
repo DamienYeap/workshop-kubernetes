@@ -25,11 +25,11 @@ Contient la logique du cluster, il est composé de plusieurs contrôleurs qui in
 
 #### Scheduleur
 
-Equivalent d'une boucle inifie qui réalise l'assignation des charges de travail sur les nodes en utilisant différents algorithmes/contraintes imposées.
+Réalise l'assignation des charges de travail (Pods) sur les nodes en utilisant différents algorithmes/contraintes imposées.
 
 ### Nodes
 
-Les nodes forment la partie qui execute la charge de travail (pod). Les nodes sont souvent hétérogènes. Dans un cluster managé les nodes sont gérées par le clouder aussi bien la partie provisonnement de la vm que l'installation des composants et les configurations necessaires pour rejoindre le cluster.
+Les nodes forment la partie qui execute la charge de travail (Pods). Les nodes sont souvent hétérogènes. Dans un cluster managé les nodes sont gérées par le clouder aussi bien la partie provisonnement de l'instance (vm) que l'installation des composants et les configurations necessaires pour rejoindre le cluster.
 
 #### kubeproxy & kubelet
 
@@ -41,17 +41,17 @@ Sur une node on retrouve trois éléments:
 
 ## Ressources
 
-Dans un cluster kubernetes, tout élément est une ressource qui a une définition et des "instances" et une version de l'API.
+Dans un cluster kubernetes, tout élément est une ressource qui a une définition et des "instances" selon une version de l'API.
 Une ressource a obligatoirement un nom, il faut ensuite consulter sa définition pour savoir les champs qu'il est possible de paramétrer lors de la création ou mise à jour d'une nouvelle ressource.
-Le champ _kind_ et le champ _apiVersion_ permet à l'api serveur de valider en fonction de la définition de la ressource en question si la demande est valide.
+Le champ _kind_ et le champ _apiVersion_ permet à l'api server de valider en fonction de la définition de la ressource en question si la demande est valide.
 Kubernetes offre en standard un certain nombre de ressources qu'il sait gérer, il est possible d'étendre l'api de kubernetes avec des ressources personnalisées (CRD).
 Pour créer ou manipuler les ressources d'un cluster kubernetes on utilise le format de fichier yaml.
 
 ### Pods
 
 Un pod est l'élément le plus simple et unitaire qu'un cluster kubernetes sait manipuler.
-Un pod peut etre constitué d'un ou plusieurs containers docker qui vont partager le meme contexte (stockage, réseau, isolation, linux namespace, cgroups...).
-C'est l'unité "pod" qui sera ordonnancée sur une node et donc tous les containers au sein d'un pod seront orchestrés sur la même node.
+Un pod peut etre constitué d'un ou plusieurs containers docker qui vont partager le même contexte (stockage, réseau, isolation, linux namespace, cgroups...).
+C'est l'unité "pod" qui sera ordonnancée sur une node et donc tous les containeurs au sein d'un pod seront orchestrés sur la même node.
 Généralement on ne manipule pas directement les pods mais les ressources de plus haut niveau.
 
 ```yaml
@@ -70,10 +70,14 @@ spec:
         - containerPort: 80
 ```
 
+Cycle de vide d'un pod
+
+![pod](./assets/pod.jpeg)
+
 ### Deploiement / StatefulSets / Deamonset / Jobs
 
 Pour manipuler plusieurs pods, gérer la redondance, les notions d'haute disponibilité, kubernetes nous permet de déclarer des charges de travail (Deploiement/StatefulSets/Deamonset/Jobs/...).
-Chaque type de charge de travail a ces propres proprités en terme d'ordonnancement, de mise à jour des pods, ect.
+Chaque type de charge de travail a ces propres proprités en terme d'ordonnancement, de mise à jour des pods, ect. Cette ressource gère la gestion de la montée de version des pods, des rollbacks.
 
 ```yaml
 apiVersion: apps/v1
@@ -154,3 +158,15 @@ data:
 Il est possible d'étendre l'api de kubernetes pour gérer des ressources "non standard". Pour cela il faut installer au sein du cluster la définition de la nouvelle ressource à l'aide de la ressource CRD.
 Cette nouvelle ressource pourra donc etre gérée et stockée dans le cluster. Pour traiter cette nouvelle ressource il faudra déployer dans le cluster une charge de travail (POD) qui sera capable de gérer cette nouvelle resosurce.
 Par exemple velero qui est un outil de sauvegarde, déclare à son installation des CRD notamment une ressource permettant definir la périodicité des sauvegardes, cela permet de valider le paramétrage renseigné au contraire d'une configmap.
+
+## Deploiements
+
+Schéma présentant une partie des ressources liées au déploiement d'une application.
+
+![deployment](./assets/deployments.png)
+
+## DNS
+
+Dans une distirbution de kubernetes, un resolver dns est installé (CoreDNS). Il permet au cluster de faire la résolution dns à l'interieur du cluster.
+Chaque élément d'un cluster a une ip dans le réseau virtuel du cluster (pods, service, ect). CoreDNS permet de résoudre ces IPs interne qui sont très volatiles par un nom.
+A l'intérieur d'un namespace on pourra directement accéder à un service directement par son nom. On peut acceder au service d'un autre namespace par l'enregistement _&lt;service&gt;.&lt;namespace&gt;.svc.cluster.local_ (exemple: hello.workshop.svc.cluster.local)
