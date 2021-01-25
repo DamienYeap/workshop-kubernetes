@@ -1,6 +1,6 @@
 # Deployer une application
 
-> Se placer dans le workspace workshop pour réaliser la suite de l'atelier
+> Se placer dans le workspace _workshop_ pour réaliser la suite de l'atelier
 
 ## Exercice 1
 
@@ -141,6 +141,9 @@ L'ingress s'appuie sur un _Ingress controler_ qui est un element compélmentaire
 
 - Créer la ressource Ingress en appliquant un fichier yaml ou directement depuis l'invité de commande
 
+<details>
+<summary>Windows</summary>
+
 ```ssh
 # créer un fichier ingress.yaml contenant:
 apiVersion: networking.k8s.io/v1
@@ -164,7 +167,10 @@ spec:
 k apply -f ingrress.yaml
 ```
 
-d
+</details>
+
+<details>
+<summary>Linux</summary>
 
 ```ssh
 cat <<EOF | kubectl apply -f -
@@ -188,7 +194,9 @@ spec:
 EOF
 ```
 
+</details>
+
 - Consulter les ingress pour connaître l'ip d'entrée du flux, depuis votre navigateur consulter plusieurs fois l'url pour illustrer le round-robin du service
 
-> Il est possible suivant l'ingress controler que l'on utilise de faire des règles de routing sur le host, l'ip, un header http, ,ect.
+> Il est possible suivant l'ingress controler que l'on utilise de faire des règles de routing sur le host, l'ip, un header http, ect.
 > Il exsite une ressource Egress permettant de gérer le flux sortant
