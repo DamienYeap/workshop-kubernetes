@@ -159,6 +159,10 @@ Il est possible d'étendre l'api de kubernetes pour gérer des ressources "non s
 Cette nouvelle ressource pourra donc etre gérée et stockée dans le cluster. Pour traiter cette nouvelle ressource il faudra déployer dans le cluster une charge de travail (POD) qui sera capable de gérer cette nouvelle resosurce.
 Par exemple velero qui est un outil de sauvegarde, déclare à son installation des CRD notamment une ressource permettant definir la périodicité des sauvegardes, cela permet de valider le paramétrage renseigné au contraire d'une configmap.
 
+### ServiceAccount & Role
+
+Il existe une ressource Role ou ClusterRole suivant le scope qui définit les actions possibles et les ressources accessibles sur l'api du cluster. Par défaut il exsite des rôles prédéfinis mais on peut ajouter des roles personnalisés. Ces roles s'appliquent à un acteur par le biais d'une ressource. Cette ressource va lister les acteurs sur lesquels le rôle ou cluster rôle s'applique, c'est le RoleBinding ou ClusterRoleBinding en fonction du scope namespace ou cluster. Les acteurs sont souvent définis comme des serviceaccount pour les utilisateurs techniques et les utilisateurs "humain".
+
 ## Deploiements
 
 Schéma présentant une partie des ressources liées au déploiement d'une application.

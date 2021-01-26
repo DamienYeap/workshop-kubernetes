@@ -32,20 +32,7 @@ Certaines ressources ont un scope cluster d'autres ressources ont un scope names
 
 ## Exercice 2
 
-Pour faciliter les changements de contextes il existe des outils kubens et kubectx. Pour windows suivre le guide ci-dessous pour linux voir la section prérequis.
-
-<details>
-<summary>Windows</summary>
-
-Télécharger les deux binaires kubenswin et kubectxwin aux urls suivantes :
-
-- [kubenswin](https://github.com/thomasliddledba/kubenswin/blob/master/bin/kubenswin.exe)
-- [kubectxwin](https://github.com/thomasliddledba/kubectxwin/blob/master/bin/kubectxwin.exe)
-
-Créer un répertoire pour ces deux binaires et ajouter ce répertoire à votre PATH
-(Click droit "Ce PC" dans l'exporateur de fichiers -\> Propriétés -\> Paramètres système avancés -\> Variables d'environnement -\> Path)
-
-</details>
+Pour faciliter les changements de contextes et namespace il existe des outils kubens et kubectx.
 
 - utiliser kubenswin ou kubens (Linux) pour naviguer entre les namespaces
 - consulter son kubeconfig entre chaque changement et comprendre les changements réalisés par kubenswin (sur windows C:\Users\\<user\>\\.kube\config)
