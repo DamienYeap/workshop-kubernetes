@@ -18,7 +18,7 @@ Executer la commande:
 # pour suivre le cycle de vie du pod hello lancer cette commande dans une autre fenêtre
 k get po -w
 # Création du pod
-k run --generator=run-pod/v1 --image=nginxdemos/hello hello
+k run --generator=run-pod/v1 --image=nginxdemos/hello hello --restart='Never'
 ```
 
 - Consulter la page nginx en réalisant un port-forward sur le port 80 du pod
@@ -100,7 +100,7 @@ Par exemple toutes les ressources de notre application auront un label avec le n
 
 > Il est possible de sélectionner des pods par la valeur d'un champ (k get po -o yaml pour connaître les champs et l'option --field-selector= pour sélectionner avec une valeur). Pour afficher les labels des pods on peut utiliser _k get pods --show-labels_
 
-- Ajouter un label _app=hello_ sur les pods qui sont en cours d'execution de notre application avec la commande _k label_
+- Ajouter un label _monapp=hello_ sur les pods qui sont en cours d'execution de notre application avec la commande _k label_
 
 > Notre modification a été réalisée sur les pods et pas la ressource déploiement, notre modification n'est donc pas pérenne. Si un pod est relancé il n'aura pas la modification.
 
@@ -110,8 +110,8 @@ Par exemple toutes les ressources de notre application auront un label avec le n
 <summary>Solution</summary>
 
 ```shell
-k label pods --field-selector=status.phase=Running app=hello
-k edit deploiement hello
+k label pods --field-selector=status.phase=Running monapp=hello
+k edit deployement hello
 ```
 
 </details>
@@ -164,7 +164,7 @@ spec:
             port:
               number: 80
 # appliquer le fichier
-k apply -f ingrress.yaml
+k apply -f ingress.yaml
 ```
 
 </details>

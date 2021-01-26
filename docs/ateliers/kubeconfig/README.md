@@ -43,14 +43,14 @@ Un fichier _kubeconfig_ peut contenir plusieurs users, plusieurs clusters et don
 k3d permet de générer le kubeconfig pour se conneter au cluster précédement créé
 
 ```shell
-k3d kubconfig get workshop
+k3d kubeconfig get workshop
 ```
 
 _kubectl_ utilise par defaut le kubeconfig dans _%userprofile%/.kube/config_ pour windows, pour linux il se base sur la variable d'environnement _KUBECONFIG_.
 Il est possible de merger directement les informations dans notre kubeconfig par défaut
 
 ```shell
-k3d kubconfig merge workshop -d
+k3d kubeconfig merge workshop -d
 ```
 
 ## Tester la connexion

@@ -56,7 +56,7 @@ Pour se connecter au dashboard kubernetes il faut renseigner un token d'un utili
 Nous allons dans cet exercice créer un user avec une autre methode de modification d'un cluster.
 
 - Créer un user technique (serviceaccount) 'dashboard-admin' dans le namespace kubernetes-dashboard en utilisant _k create sa_
-- Lister les roles au niveau cluster existant (clusterrole). Kubernetes propose des rôles déjà existant, consulter notamment le rôle 'admin' au format yaml
+- Lister les roles au niveau cluster existant (clusterrole). Kubernetes propose des rôles déjà existant, consulter notamment le cluster rôle 'admin' au format yaml
 - Créer un clusterrolebinding en précisant uniquement le rôle 'admin' _k create clusterrolebinding_
 - Consulter au format yaml le clusterrolebinding créé précédement
 - Utiliser la commande _k explain_ pour comprendre les champs disponibles sur une ressource clusterrolebinding et notammment comprendre comment modifier notre ressource pour ajouter le rôle 'kubernetes-dashboard' uniquement à notre user 'dashboard-admin'
