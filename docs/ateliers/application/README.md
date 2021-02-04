@@ -1,6 +1,6 @@
-# Deployer une application
+# Déployer une application
 
-> Se placer dans le workspace _workshop_ pour réaliser la suite de l'atelier
+> Se placer dans le namespace _workshop_ pour réaliser la suite de l'atelier
 
 ## Exercice 1
 
