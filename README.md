@@ -8,12 +8,12 @@ npm install
 
 ## Development
 
-```ssh
+```shell
 npm run docs:dev
 ```
 
 ## Build
 
-```ssh
+```shell
 npm run docs:build
 ```

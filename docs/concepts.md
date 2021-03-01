@@ -6,7 +6,7 @@
 
 ### Control plane
 
-Partie management du cluster qui est composée de plusieurs éléments qui sont souvent redondés. Dans un cluster managé le _control plane_ n'est pas accéssible directement et c'est le clouder qui le provisionne à la création du cluster.
+La partie management du cluster est composée de plusieurs éléments qui sont souvent redondés. Dans un cluster managé le _control plane_ n'est pas accéssible directement et c'est le clouder qui le provisionne à la création du cluster.
 Un cluster kubernetes s'efforce à tout instant de s'assurer que l'état souhaité correspond à l'état actuel du cluster, les actions sont réalisées par des déclenchements d'evenements asynchrones.
 
 #### API
@@ -130,7 +130,7 @@ Un cluster kubernetes manipule uniquement des ressources, une installation stand
 Il existe par exemple une ressource ConfigMap qui permet de stocker de la configuration qui pourra etre injecté dans un pod.
 Les configmaps sont en clair, il existe une ressource sercets pour chiffrer des informations mais ce chiffrement est par défaut uniquement en base64.
 
-````yaml
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -141,7 +141,7 @@ data:
     color.good=purple
     color.bad=yellow
     allow.textmode=true
-```kubernetes-dashboard
+```
 
 ```yaml
 apiVersion: v1
@@ -151,7 +151,7 @@ metadata:
 type: Opaque
 data:
   password: cGFzc3dvcmQK
-````
+```
 
 ### CustomResourceDefinitions (CRD)
 

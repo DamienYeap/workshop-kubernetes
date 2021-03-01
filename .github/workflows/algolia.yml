@@ -1,0 +1,21 @@
+name: scrape
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out code 🛎
+        uses: actions/checkout@v2
+      - name: scrape the site 🧽
+        env:
+          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+        run: |
+          docker run \
+          -e ALGOLIA_APPLICATION_ID -e ALGOLIA_API_KEY \
+          -e CONFIG="$(cat algolia.json)" \
+          algolia/docsearch-scraper:v1.6.0
