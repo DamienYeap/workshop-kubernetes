@@ -1,5 +1,9 @@
 name: scrape
-on: push
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
 jobs:
   scrape:
     runs-on: ubuntu-latest
