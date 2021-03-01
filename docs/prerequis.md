@@ -1,10 +1,13 @@
 # Prérequis
 
+## Installation des outils
+
 Ce workshop peut être réalisé sur Windows 10 ou linux pour chaque commande si nécessaire il y aura les versions dans un paragraphe à dérouler.
 
-Pour réaliser ce worshop vous devez avoir installé docker sur votre machine et être l'admin de votre poste de travail.
+Pour réaliser ce worshop vous devez avoir [docker](https://www.docker.com/products/docker-desktop) installé sur votre machine et être l'admin de votre poste de travail.
 
 - Installer l'outil [lens](https://k8slens.dev) pour visualiser les ressources d'un cluster
+- Installer les utilitaires ci-dessous en fonction de votre système d'exploitation
 
 <details>
 <summary>Windows</summary>
@@ -28,7 +31,7 @@ Créer un répertoire pour ces deux binaires et ajouter ce répertoire à votre 
 
 </details>
 
-## Format de fichier Yaml
+## Yaml
 
 Pour déclarer des ressources dans un cluster kubernetes on utilise généralement le format yaml, pour rappel:
 

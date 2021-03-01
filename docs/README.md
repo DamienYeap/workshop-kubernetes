@@ -2,7 +2,7 @@
 home: true
 heroImage: /kuberneteslogo.png
 actionText: Get Started →
-actionLink: /ateliers/
+actionLink: /prerequis
 tagline: Découvrir kubernetes et ces concepts avec des exemples
 footer: Yeap
 meta:

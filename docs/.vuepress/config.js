@@ -20,6 +20,11 @@ module.exports = {
       prefix: "md",
       rules: ["image"],
     },
+    "vuepress-plugin-code-copy": {
+      align: "top",
+      staticIcon: false,
+      backgroundTransition: true,
+    },
   },
   locales: {
     "/": {
@@ -41,7 +46,10 @@ module.exports = {
       "/": {
         selectText: "Languages",
         label: "Français",
-        algolia: {},
+        algolia: {
+          apiKey: "852f323ddf7de2b586ba06a76963d00c",
+          indexName: "formation",
+        },
         nav: [
           { text: "Accueil", link: "/" },
           { text: "Prérequis", link: "/prerequis.md" },
@@ -50,6 +58,11 @@ module.exports = {
           { text: "Liens", link: "/liens.md" },
         ],
         sidebar: [
+          {
+            title: "Prérequis",
+            path: "/prerequis",
+            collapsable: true,
+          },
           {
             title: "Concepts",
             path: "/concepts",

@@ -14,7 +14,7 @@ Le minimum d'informations qu'il faut fournir pour qu'un pod s'execute est un nom
 
 Executer la commande:
 
-```ssh
+```shell
 # pour suivre le cycle de vie du pod hello lancer cette commande dans une autre fenêtre
 k get po -w
 # Création du pod
@@ -144,7 +144,7 @@ L'ingress s'appuie sur un _Ingress controler_ qui est un element compélmentaire
 <details>
 <summary>Windows</summary>
 
-```ssh
+```yaml
 # créer un fichier ingress.yaml contenant:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -172,7 +172,7 @@ k apply -f ingress.yaml
 <details>
 <summary>Linux</summary>
 
-```ssh
+```yaml
 cat <<EOF | kubectl apply -f -
 apiVersion: networking.k8s.io/v1
 kind: Ingress
