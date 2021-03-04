@@ -1,4 +1,9 @@
-# Ateliers
+---
+prev: "/concepts"
+next: "./kubeconfig/"
+---
+
+# Kubernetes
 
 Une distribution kubernetes correspond à une version de kubernetes standard avec plus ou moins de services annexes pré-packagés.
 Lors de cet atelier nous allons utiliser k3d qui est une version conteneurisée de [k3s](https://k3s.io/) qui est une distribution de kubernetes distribué par Rancher ([k3d](https://github.com/rancher/k3d))
@@ -16,7 +21,7 @@ Docker et chocolatey (pour windows) doivent être installés, cf [prérequis](..
 ```shell
 # Depuis powershell avec une session admin
 choco install k3d
-# vérifier l'installtion
+# vérifier l'installation
 k3d version
 # k3s porte la version de kubernetes
 ```

@@ -1,10 +1,15 @@
 {
-  "index_name": "formation",
+  "index_name": "vuepress",
   "start_urls": [
     {
       "url": "https://yeap-atelier-kubernetes.netlify.app",
       "selectors_key": "v1",
       "tags": ["v1"]
+    },
+    {
+      "url": "https://yeap-atelier-kubernetes.netlify.app",
+      "selectors_key": "v2",
+      "tags": ["v2"]
     }
   ],
   "stop_urls": [],

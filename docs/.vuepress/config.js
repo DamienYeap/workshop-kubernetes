@@ -34,7 +34,7 @@ module.exports = {
     },
   },
   themeConfig: {
-    editLinkText: "Edit cette page sur Github",
+    editLinkText: "Editer cette page sur Github",
     lastUpdated: "Mis à jour le",
     repo: "yeapAi/workshop-kubernetes",
     repoLabel: "Contribue !",
@@ -70,15 +70,33 @@ module.exports = {
           },
           {
             title: "Ateliers",
-            path: "/ateliers/",
             collapsable: true,
             sidebarDepth: 0,
             children: [
-              "/ateliers/kubeconfig/",
-              "/ateliers/kubectl/",
-              "/ateliers/namespace/",
-              "/ateliers/apply/",
-              "/ateliers/application/",
+              {
+                title: "Kubernetes",
+                path: "/ateliers/kubernetes/",
+                collapsable: true,
+                sidebarDepth: 0,
+                children: [
+                  "/ateliers/kubernetes/kubeconfig/",
+                  "/ateliers/kubernetes/kubectl/",
+                  "/ateliers/kubernetes/namespace/",
+                  "/ateliers/kubernetes/apply/",
+                  "/ateliers/kubernetes/application/",
+                ],
+              },
+              {
+                title: "Helm",
+                path: "/ateliers/helm/",
+                collapsable: true,
+                sidebarDepth: 0,
+                children: [
+                  "/ateliers/helm/decouverte/",
+                  "/ateliers/helm/version/",
+                  "/ateliers/helm/umbrella/",
+                ],
+              },
             ],
           },
         ],

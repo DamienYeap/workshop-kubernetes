@@ -1,3 +1,7 @@
+---
+prev: "/ateliers/kubernetes/"
+---
+
 # Kubeconfig
 
 Pour communiquer avec le cluster nous allons utiliser le client kubectl. Pour se connecter au cluster kubectl a besoin d'une ressource _kubeconfig_ qui est un fichier yaml qui contient les informations de connexion.

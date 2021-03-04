@@ -1,3 +1,7 @@
+---
+next: "/ateliers/kubernetes/"
+---
+
 # Concepts
 
 ## Cluster kubernetes
@@ -174,3 +178,97 @@ Schéma présentant une partie des ressources liées au déploiement d'une appli
 Dans une distirbution de kubernetes, un resolver dns est installé (CoreDNS). Il permet au cluster de faire la résolution dns à l'interieur du cluster.
 Chaque élément d'un cluster a une ip dans le réseau virtuel du cluster (pods, service, ect). CoreDNS permet de résoudre ces IPs interne qui sont très volatiles par un nom.
 A l'intérieur d'un namespace on pourra directement accéder à un service directement par son nom. On peut acceder au service d'un autre namespace par l'enregistement _&lt;service&gt;.&lt;namespace&gt;.svc.cluster.local_ (exemple: hello.workshop.svc.cluster.local)
+
+## Helm
+
+Dans l'atelier kubernetes nous allons voir comment déployer une application avec un ou plusieurs fichiers yaml. Cette façon d'installer est fonctionnel mais n'est pas très souple ni très pratique.
+Helm a été créé pour répondre à ces problématiques.
+
+- Comment versionner le déploiement d'une application
+- Comment suivre ce qui a été installé sur le cluster
+- Comment gérer l'installation d'une application sur différents clusters/environnements (par exemple différent système de stockage chez les clouders)
+- Comment packager efficacement et de manière lisible des installations complèxes
+
+En regardant ce fichier qui installe l'ingress controller [nginx](https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/scw/deploy.yaml) on peut remarquer la difficulté à maintenir un tel fichier.
+
+Helm adresse ces problèmatiques avec un client `helm` qui se connecte à l'api d'un cluster kubernetes sous la forme d'un binaire développé en `Go` (il utilise le même fonctionnment que `kubectl` avec kubeconfig).
+Les applications/services à déployer seront packagés dans une `chart`. Helm utilise `gotemplate` pour proposer du templating en amont du déploiement. Helm installe les ressources dans un cluster kubernetes regroupé sous une `release`.
+
+Une chart se présente sous la forme d'un tar.gz (version packagé) ou d'un repertoire contenant l'arborescence suivante :
+
+```shell
+charts/                # Charts en dépendance
+templates/             # Repertoire des ressources yaml à templétiser
+   deploiement.yaml    # Ressource yaml
+   ingress.yaml
+   service.yaml
+   NOTES.txt           # Output présenté à l'utilisateur à la fin de l'installation (peut etre templétisé)
+   _helpers.tpl        # Valeurs précalulées par templating
+.helmignore            # Fichiers à ignorer lors du packaging de la chart
+Chart.yaml             # Fichier principal de la chart
+README.md              # Documentation ! très important pour comprendre comment configurer la chart !
+values.yaml            # Valeurs par défaut
+```
+
+Le fichier principal `Chart.yaml` se présente comme une ressource (une version d'api et des clés/valeurs).
+
+Il faut donc préciser la version v2 de l'api pour helm v3 (version v1 pour Helm v2).
+La version de la chart permet de suivre le cycle de vie des modifications que l'on va pouvoir déployer.
+La version applicative a son propre cycle de vie, elle correspond à un tag d'une image docker. Une montée de version applicative entraîne une montée de version de la chart, un changement dans la chart ne correspond pas forcement à une montée de version de l'application (même fonctionnement qu'une dépendance dans du code applicatif).
+
+```yaml
+# v2 for Helm V3 client
+apiVersion: v2
+# Chart name
+name: yeap-front
+
+# Chart description
+description: A Helm chart for Kubernetes
+
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+appVersion: 1.0.0
+```
+
+Helm fonctionne de manière très simple, il va prendre tous les fichiers dans le répertoire `templates`, résoudre le templating à l'aide de contextes et de valeurs pour créer un fichier yaml qui contiendra toutes les ressources à déployer dans le bon ordre. Helm va comparer la précédente installation pour modifier uniquement les ressources en écart. Si le déploiement est valide, helm met à jour la release dans kubernetes pour indiquer la version et les ressources déployées, cette release sera la base de comparaison pour la prochaine installation.
+
+Helm utilise les avantages du format yaml pour merger les fichiers :
+
+```yaml
+# values.yaml
+application:
+  env: test
+database: test
+
+# values-dev.yaml
+application:
+  debug: true
+database: dev
+
+# values.yaml + values-dev.yaml (merge dans l'ordre)
+application:
+  debug: true
+  env: test
+database: dev
+```
+
+Helm gère la mise à jour des ressources mais ne gère pas la prise en compte des changements, c'est le cluster kubernetes en fonction de son paramétrage qui va réaliser ces actions.
+Par exemple, mettre à jour un secret ne relance pas les pods qui utilisent ce secret.
+
+![helm](./assets/helm.png)
