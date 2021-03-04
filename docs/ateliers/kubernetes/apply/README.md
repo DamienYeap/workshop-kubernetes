@@ -28,8 +28,8 @@ k apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/dep
 - Se placer dans le namespace du dashboard et consulter les pods déployés, noter les ports utilisés avec _k describe_
 - Consulter le service du dashbaord les cibles et les ports utilisés
 - Utiliser la commande _k port-forward_ pour bind un port local de votre machine au port du service dashboard
-- Comprendre et savoir expliquer la premiere ligne du logs du _port-forward_ en la comparant à la ligne commande saisie
-- Consulter l'url localhost en https avec le port utilisé pour le port-forward
+- Comparer le retour de la commande et la ligne commande saisie en s'appuyant sur le describe fait précédement
+- Consulter l'url https://localhost en précisant le port local utilisé dans le port-forward
 
 <details>
 <summary>Solution</summary>
@@ -44,7 +44,7 @@ k describe svc dashboard
 
 > Le pod kubernetes-dashboard a un label _k8s-app=kubernetes-dashboard_.
 >
-> Le service dashboard cible les pods avec le label kubernetes-dashboard _Selector: k8s-app=kubernetes-dashboard_
+> Le service dashboard cible les pods avec le label kubernetes-dashboard _Selector: k8s-app=kubernetes-dashboard_.
 >
 > Le service est une interface virtuelle, quand on port-forward dans un service on réalise en fait un port-forward dans les pods qui sont en cible du service donc le port présenté dans les logs est le port du pod.
 
@@ -100,9 +100,9 @@ subjects:
 
 ## Exercice 3
 
-Lors de la création d'un serviceaccount kubernetes lui associe un secret et notamment un token qui va nous servir pour se connecter au dashboard
+Lors de la création d'un serviceaccount kubernetes lui associe un secret et notamment un token qui va nous servir pour à nous connecter au dashboard
 
-- Consulter le serviceaccount pour trouver le nom du secret
+- Consulter le serviceaccount créé dans les exercices précédents pour trouver le nom du secret
 - Consulter le secret au format yaml pour récupérer le token
 - Dechiffrer le token qui est en base64
 - Se connecter sur le dashboard kubernetes avec le token grâce au port-forward
