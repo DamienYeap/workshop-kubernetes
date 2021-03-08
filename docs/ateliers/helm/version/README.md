@@ -38,7 +38,12 @@ Helm utilise les secrets de kubernetes pour stocker les informations de la relea
 > Il contient toutes les informations pour réaliser le différentiel avec la prochaine installation de la release ou un retour en arrière.
 
 ```shell
+# unix
 kubectl get secret sh.helm.release.v1.marelease.v1 -o go-template='{{.data.release | base64decode | base64decode}}' | gzip -d | jq
+# windows
+kubectl get secret sh.helm.release.v1.marelease.v1 -o go-template='{{.data.release | base64decode }}' > file.base64
+certutil -decode -f file.base64 file.gz
+gzip -d file.gz
 ```
 
 ## Exercice 3
